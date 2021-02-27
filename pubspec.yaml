@@ -36,6 +36,8 @@ dependencies:
   firebase_core: ^0.7.0
   firebase_ml_vision: ^0.10.0
   firebase_storage: ^7.0.0
+  cloud_firestore: ^0.16.0+1
+  uuid: ^2.2.2
 
 
 
