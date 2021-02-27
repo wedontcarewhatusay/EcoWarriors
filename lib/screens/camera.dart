@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:cameraapp/screens/ml.dart';
 
 class CameraScreen extends StatefulWidget {
   @override
@@ -14,7 +15,7 @@ class _CameraScreenState extends State<CameraScreen> {
   List cameras;
   int selectedCameraIndex;
   String imgPath;
-
+  var labels = Label();
 
 
   Future initCamera(CameraDescription cameraDescription) async {
@@ -125,7 +126,17 @@ class _CameraScreenState extends State<CameraScreen> {
       await cameraController.takePicture(path).then((value) {
         print('here');
         print(path);
-        Navigator.push(context, MaterialPageRoute(builder: (context) =>PreviewScreen(imgPath: path,fileName: "$name.png",)));
+        if (mounted) {
+          setState(() {
+            imgPath = path;
+          });
+          if (path != null) {
+            print('inside not null');
+            labels.detectLabels(path).then((_) {});
+          }
+        }
+
+        // Navigator.push(context, MaterialPageRoute(builder: (context) =>PreviewScreen(imgPath: path,fileName: "$name.png",)));
       });
 
     } catch (e) {
@@ -213,6 +224,6 @@ class _CameraScreenState extends State<CameraScreen> {
   }
 
   showCameraException(e) {
-    String errorText = 'Error ${e.code} \nError message: ${e.description}';
+    String errorText = 'Error ${e.message}';
   }
 }
