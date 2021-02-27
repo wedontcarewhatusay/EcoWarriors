@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:cameraapp/screens/ml.dart';
+import 'package:uuid/uuid.dart';
+
 
 class CameraScreen extends StatefulWidget {
   @override
@@ -120,8 +122,10 @@ class _CameraScreenState extends State<CameraScreen> {
   onCapture(context) async {
     try {
       final p = await getTemporaryDirectory();
-      final name = DateTime.now();
-      final path = "${p.path}/$name.png";
+      final String uuid = Uuid().v1();
+      final date = DateTime.now().microsecondsSinceEpoch;
+      final name = "$uuid-$date";
+      final path = "${p.path}/$name.jpg";
 
       await cameraController.takePicture(path).then((value) {
         print('here');
@@ -135,8 +139,12 @@ class _CameraScreenState extends State<CameraScreen> {
             labels.detectLabels(path).then((_) {});
           }
         }
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(builder: (context) => ItemsListScreen()),
+        // );
 
-        // Navigator.push(context, MaterialPageRoute(builder: (context) =>PreviewScreen(imgPath: path,fileName: "$name.png",)));
+
       });
 
     } catch (e) {
