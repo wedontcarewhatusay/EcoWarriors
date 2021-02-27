@@ -7,7 +7,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import 'package:uuid/uuid.dart';
 
 class Label {
   //
@@ -32,8 +31,7 @@ class Label {
       labelTexts.add(text);
     }
 
-    final String uuid = Uuid().v1();
-    final String downloadURL = await _uploadFile(uuid, imagePath) ;
+    final String downloadURL = await _uploadFile(imagePath) ;
 
     await _addItem(downloadURL, labelTexts);
   }
@@ -43,12 +41,12 @@ class Label {
         .add(<String, dynamic>{'downloadURL': downloadURL, 'labels': labels});
   }
 
-  Future<String> _uploadFile(filename, imagePath) async {
+  Future<String> _uploadFile(imagePath) async {
     final File file = File(imagePath);
-    print("this is image path detectLabels ${imagePath}");
+    print("this is image path uploadFile ${imagePath}");
 
     final firebase_storage.Reference ref =
-        firebase_storage.FirebaseStorage.instance.ref().child('$filename.jpg');
+        firebase_storage.FirebaseStorage.instance.ref().child(imagePath);
     final firebase_storage.UploadTask uploadTask = ref.putFile(
       file,
       firebase_storage.SettableMetadata(
