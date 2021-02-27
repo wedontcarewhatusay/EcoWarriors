@@ -1,1 +1,9 @@
 build/
+pubspec.lock
+.dart_tool/
+.packages
+.flutter-plugins
+.flutter-plugins-dependencies
+.idea/
+android/app/google-services.json
+
