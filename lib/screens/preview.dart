@@ -16,6 +16,7 @@ class PreviewScreen extends StatefulWidget {
   final String imgPath;
   final String fileName;
   final Object trackCount;
+
   PreviewScreen({this.imgPath, this.fileName, this.trackCount});
 
 
@@ -99,8 +100,8 @@ class ItemsListScreen extends StatelessWidget {
                         MaterialPageRoute(builder: (context) => CameraScreen()),
                       );
         },
-child: const Icon(Icons.add),
-),
+        child: const Icon(Icons.add),
+      ),
       );
   }
 }
@@ -176,4 +177,80 @@ class ItemsList extends StatelessWidget {
                                         },
                                         );
                 }
+}
+
+
+class InfoScreen extends StatefulWidget {
+
+
+  @override
+  _InfoScreenState createState() => _InfoScreenState();
+}
+
+class _InfoScreenState extends State<InfoScreen> {
+  @override
+  Widget build(BuildContext context) {
+
+    Color color = Theme.of(context).primaryColor;
+
+    Widget textSection = Container(
+      padding: const EdgeInsets.all(60),
+      child: Center (
+      child: Text(
+        '''
+        You are about to throw away a green glass bottle. If left unrecycled it will more than 3000 years to decompose.  The energy saved from recycling it could power a LED lightbulb for 40hours.
+        ''',
+        style: TextStyle(fontSize: 20),
+        softWrap: true,
+      ),
+      )
+    );
+
+    Widget imageSection = Container(
+        child: Align (
+
+          // padding: const EdgeInsets.all(32),
+          alignment: Alignment.center,
+            child: ColorFiltered(
+              colorFilter: ColorFilter.mode(Colors.yellow, BlendMode.modulate),
+              child: Image.asset('./images/green.png', width: 80, height: 80),
+            )
+        )
+    );
+
+
+    return MaterialApp(
+      home: Scaffold(
+
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+
+          // child: ListView (
+          children: <Widget>[
+            textSection,
+            imageSection,
+            // Image.asset(
+            //   './images/green.png',
+            //   width: 40,
+            //   height: 40,
+            // ),
+          ],
+        // )
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            showDialog(
+                context: context,
+                builder: (_) => AlertDialog(
+                  content: Text('Thank you for making the right choice!'),
+                )
+            );
+
+          },
+          child: const Icon(Icons.check),
+        ),
+      ),
+    );
+  }
+
 }
