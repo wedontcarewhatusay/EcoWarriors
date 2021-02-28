@@ -154,7 +154,10 @@ class _CameraScreenState extends State<CameraScreen> {
           print('true');
           labels.detectLabels(path,"text").then((_) {});
           print('MOVEON!');
+
           stateCounter=0;
+          Navigator.push(context, MaterialPageRoute ( builder: (context) => InfoScreen() ) );
+
         }else{
           print('false');
         }
