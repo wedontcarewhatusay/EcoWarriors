@@ -9,7 +9,79 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 import 'package:cameraapp/screens/camera.dart';
+import 'package:flutter/services.dart';
 
+
+class PreviewScreen extends StatefulWidget {
+  final String imgPath;
+  final String fileName;
+  final Object trackCount;
+  PreviewScreen({this.imgPath, this.fileName, this.trackCount});
+
+
+  @override
+  _PreviewScreenState createState() => _PreviewScreenState();
+}
+
+class _PreviewScreenState extends State<PreviewScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: true,
+        ),
+        body: Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Expanded(
+                flex: 2,
+                child: Image.file(File(widget.imgPath),fit: BoxFit.cover,),
+              ),
+
+              Align(
+                alignment: Alignment.bottomRight,
+                child: Container(
+                  width: double.infinity,
+                  height: 60,
+                  color: Colors.black,
+                  child: Center(
+                    child: IconButton(
+                      icon: Icon(Icons.check,color: Colors.white,),
+                      onPressed: (){
+                      },
+                    ),
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomLeft,
+                child: Container(
+                  width: double.infinity,
+                  height: 60,
+                  color: Colors.black,
+                  child: Center(
+                    child: IconButton(
+                      icon: Icon(Icons.cancel,color: Colors.white,),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        )
+    );
+  }
+
+  Future getBytes () async {
+    Uint8List bytes = File(widget.imgPath).readAsBytesSync() as Uint8List;
+//    print(ByteData.view(buffer))
+    return ByteData.view(bytes.buffer);
+  }
+}
 
 class ItemsListScreen extends StatelessWidget {
   @override

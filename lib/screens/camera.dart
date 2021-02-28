@@ -6,7 +6,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:cameraapp/screens/ml.dart';
 import 'package:uuid/uuid.dart';
 
-
 class CameraScreen extends StatefulWidget {
   @override
   _CameraScreenState createState() => _CameraScreenState();
@@ -18,7 +17,6 @@ class _CameraScreenState extends State<CameraScreen> {
   int selectedCameraIndex;
   String imgPath;
   var labels = Label();
-
 
   Future initCamera(CameraDescription cameraDescription) async {
     if (cameraController != null) {
@@ -134,11 +132,14 @@ class _CameraScreenState extends State<CameraScreen> {
           setState(() {
             imgPath = path;
           });
+
           if (path != null) {
             print('inside not null');
-            labels.detectLabels(path).then((_) {});
+            // labels.detectLabels(path).then((_) {});
           }
         }
+
+        Navigator.push(context, MaterialPageRoute(builder: (context) => PreviewScreen(imgPath: path, fileName: "$name.png",)));
         // Navigator.push(
         //   context,
         //   MaterialPageRoute(builder: (context) => ItemsListScreen()),
