@@ -17,6 +17,7 @@ class _CameraScreenState extends State<CameraScreen> {
   int selectedCameraIndex;
   String imgPath;
   var labels = Label();
+  int stateCounter = 0;
 
   Future initCamera(CameraDescription cameraDescription) async {
     if (cameraController != null) {
@@ -125,7 +126,7 @@ class _CameraScreenState extends State<CameraScreen> {
       final name = "$uuid-$date";
       final path = "${p.path}/$name.jpg";
 
-      await cameraController.takePicture(path).then((value) {
+      await cameraController.takePicture(path).then((value) async {
         print('here');
         print(path);
         if (mounted) {
@@ -139,7 +140,25 @@ class _CameraScreenState extends State<CameraScreen> {
           }
         }
 
-        Navigator.push(context, MaterialPageRoute(builder: (context) => PreviewScreen(imgPath: path, fileName: "$name.png",)));
+        //Navigator.push(context, MaterialPageRoute(builder: (context) => PreviewScreen(imgPath: path, fileName: "$name.png",)));
+
+        bool accepted = await Navigator.push(context, MaterialPageRoute (
+            builder: (context) => PreviewScreen(imgPath: path, fileName: "$name.png",))
+        );
+
+        if (accepted == true && stateCounter==0){
+          print('true');
+          stateCounter++;
+          labels.detectLabels(path,"image").then((_) {});
+        }else if (accepted == true && stateCounter==1) {
+          print('true');
+          labels.detectLabels(path,"text").then((_) {});
+          print('MOVEON!');
+          stateCounter=0;
+        }else{
+          print('false');
+        }
+
         // Navigator.push(
         //   context,
         //   MaterialPageRoute(builder: (context) => ItemsListScreen()),

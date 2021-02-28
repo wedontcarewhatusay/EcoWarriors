@@ -49,6 +49,7 @@ class _PreviewScreenState extends State<PreviewScreen> {
                     child: IconButton(
                       icon: Icon(Icons.check,color: Colors.white,),
                       onPressed: (){
+                        Navigator.pop(context, true);
                       },
                     ),
                   ),
@@ -64,7 +65,7 @@ class _PreviewScreenState extends State<PreviewScreen> {
                     child: IconButton(
                       icon: Icon(Icons.cancel,color: Colors.white,),
                       onPressed: () {
-                        Navigator.pop(context);
+                        Navigator.pop(context, false);
                       },
                     ),
                   ),
