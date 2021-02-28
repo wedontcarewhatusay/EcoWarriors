@@ -1,3 +1,4 @@
+import 'package:cameraapp/screens/preview.dart';
 import 'package:flutter/material.dart';
 import 'package:cameraapp/screens/camera.dart';
 
@@ -9,6 +10,8 @@ class HomeScreen extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => CameraScreen()),
+      // MaterialPageRoute(builder: (context) => InfoScreen()),
+
     );
 
   }
@@ -17,19 +20,23 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home Activity Screen'),
+        title: Text('Re:Track'),
       ),
       body: Center(
-
-        child: RaisedButton(
-            child: Text('Navigate To Second Screen'),
-            color: Colors.green,
-            textColor: Colors.white,
-            onPressed: () {
-              gotoCamera(context);
-            }),
+        child: Container (
+          child: Align (
+          alignment: Alignment.bottomCenter,
+            child: RaisedButton(
+              child: Text('Scan'),
+              color: Colors.green,
+              textColor: Colors.white,
+              onPressed: () {
+                gotoCamera(context);
+              }),
 
       ),
+      ),
+    ),
     );
   }
 }
